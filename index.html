@@ -54,13 +54,10 @@
     var ctx = c.getContext('2d');
     c.width = window.innerWidth;
     c.height = window.innerHeight;
-    document.querySelector('canvas').addEventListener('mousedown', function(e) {
-      drawing = true;
+    document.querySelector('canvas').addEventListener('click', function(e) {
+      drawing = !drawing;
       oldX = e.pageX;
       oldY = e.pageY;
-    });
-    document.querySelector('canvas').addEventListener('mouseup', function(e) {
-      drawing = false;
     });
     var oldX, oldY;
     ctx.lineWidth = 15;
