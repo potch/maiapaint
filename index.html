@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>MaiaPaint</title>
+  <style>
+    canvas {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 1px solid black;
+    }
+    nav {
+      position: absolute;
+      bottom: 1em;
+      left: 1em;
+    }
+    </style>
+</head>
+<body>
+  <canvas></canvas>
+  <nav>
+    <a data-color="#000"></a>
+    <a data-color="#fff"></a>
+    <a data-color="#f00"></a>
+    <a data-color="#f80"></a>
+    <a data-color="#ff0"></a>
+    <a data-color="#0f0"></a>
+    <a data-color="#0ff"></a>
+    <a data-color="#00f"></a>
+    <a data-color="#80f"></a>
+    <a data-color="#f0f"></a>
+    <a data-color="brown"></a>
+    <a data-color="#fc9"></a>
+  </nav>
+  <script>
+    var as = document.querySelectorAll('a');
+    for (var i = 0; i < as.length; i++) {
+      as[i].style.background = as[i].getAttribute('data-color');
+    }
+    var c = document.querySelector('canvas');
+    var ctx = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    document.querySelector('canvas').addEventListener('mousedown', function(e) {
+      drawing = true;
+      oldX = e.pageX;
+      oldY = e.pageY;
+    });
+    document.querySelector('canvas').addEventListener('mouseup', function(e) {
+      drawing = false;
+    });
+    var oldX, oldY;
+    ctx.lineWidth = 15;
+    ctx.lineCap = 'round';
+    document.querySelector('canvas').addEventListener('mousemove', function(e) {
+      if (drawing) {
+        ctx.beginPath();
+        ctx.moveTo(oldX, oldY);
+        ctx.lineTo(e.pageX, e.pageY);
+        oldX = e.pageX;
+        oldY = e.pageY;
+        ctx.stroke();
+      }
+    });
+    var drawing = false;
+    document.querySelector('nav').addEventListener('click', function(e) {
+      var color = e.target.getAttribute('data-color')
+      if (color) {
+        ctx.strokeStyle = color;
+      }     
+    });
+  </script>
+  </body>
+</html>
